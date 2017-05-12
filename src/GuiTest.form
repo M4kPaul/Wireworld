@@ -47,7 +47,4 @@
       </component>
     </children>
   </grid>
-  <inspectionSuppressions>
-    <suppress inspection="I18nForm" id="20e4e"/>
-  </inspectionSuppressions>
 </form>

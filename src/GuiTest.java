@@ -18,6 +18,6 @@ class GuiTest extends JFrame {
   }
 
   public static void main(String[] args) {
-    SwingConsole.run(new GuiTest(), 300, 100);
+    SwingConsole.run(new GuiTest(), 306, 100);
   }
 }

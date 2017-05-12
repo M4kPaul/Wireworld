@@ -10,7 +10,6 @@ class GuiTest extends JFrame {
 
   private GuiTest() {
     ActionListener buttonListener = (ActionEvent e) -> textField1.setText(((JButton)e.getSource()).getText());
-
     button1.addActionListener(buttonListener);
     button2.addActionListener(buttonListener);
     button3.addActionListener(buttonListener);

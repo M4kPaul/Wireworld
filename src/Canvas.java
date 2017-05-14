@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("SuspiciousMethodCalls")
 class Canvas extends JPanel{
-  private final int columnCount = 10;
-  private final int rowCount = 10;
+  private final int columnCount = 50;
+  private final int rowCount = 50;
   private final List<Rectangle> cells;
   private Point selectedCell;
   private final List<ColorCell> selectedCells;
@@ -26,10 +26,11 @@ class Canvas extends JPanel{
     addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        if (selectedCells.contains(selectedCell)) {
-          selectedCells.remove(selectedCell);
+        ColorCell colorCell = new ColorCell(selectedCell, selectedColor);
+        if (selectedCells.contains(colorCell)) {
+          selectedCells.remove(colorCell);
         } else {
-          selectedCells.add(new ColorCell(selectedCell, selectedColor));
+          selectedCells.add(colorCell);
         }
         repaint();
       }
@@ -62,7 +63,7 @@ class Canvas extends JPanel{
 
   @Override
   public Dimension getPreferredSize() {
-    return new Dimension(256, 256);
+    return new Dimension(512, 512);
   }
 
   @Override

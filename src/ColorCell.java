@@ -17,4 +17,9 @@ class ColorCell {
   Color getColor() {
     return color;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    return o instanceof ColorCell && point.equals(((ColorCell)o).getPoint()) && color.equals(((ColorCell)o).getColor());
+  }
 }

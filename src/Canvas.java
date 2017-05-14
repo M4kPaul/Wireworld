@@ -10,10 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 
-@SuppressWarnings("SuspiciousMethodCalls")
 class Canvas extends JPanel{
-  private final int columnCount = 50;
-  private final int rowCount = 50;
+  private final int columnCount = 32;
+  private final int rowCount = 32;
   private final List<Rectangle> cells;
   private Point selectedCell;
   private final List<ColorCell> selectedCells;
@@ -27,8 +26,13 @@ class Canvas extends JPanel{
       @Override
       public void mouseClicked(MouseEvent e) {
         ColorCell colorCell = new ColorCell(selectedCell, selectedColor);
-        if (selectedCells.contains(colorCell)) {
-          selectedCells.remove(colorCell);
+        int index = selectedCells.indexOf(colorCell);
+        if (index != -1) {
+          if (selectedColor.equals(selectedCells.get(index).getColor())) {
+            selectedCells.remove(colorCell);
+          } else {
+            selectedCells.get(index).setColor(colorCell.getColor());
+          }
         } else {
           selectedCells.add(colorCell);
         }

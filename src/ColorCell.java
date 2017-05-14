@@ -3,7 +3,7 @@ import java.awt.Point;
 
 class ColorCell {
   private final Point point;
-  private final Color color;
+  private Color color;
 
   ColorCell(Point point, Color color) {
     this.point = point;
@@ -18,8 +18,12 @@ class ColorCell {
     return color;
   }
 
+  void setColor(Color color) {
+    this.color = color;
+  }
+
   @Override
   public boolean equals(Object o) {
-    return o instanceof ColorCell && point.equals(((ColorCell)o).getPoint()) && color.equals(((ColorCell)o).getColor());
+    return o instanceof ColorCell && point.equals(((ColorCell)o).getPoint());
   }
 }

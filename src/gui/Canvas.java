@@ -44,8 +44,9 @@ public class Canvas extends JPanel {
   public int getCellState(Point point) {
     Cell cell = selectedCells.get(point);
 
-    if (cell != null)
+    if (cell != null) {
       return cell.getState();
+    }
     return State.EMPTY;
   }
 
@@ -71,6 +72,7 @@ public class Canvas extends JPanel {
     selectedCell = null;
     selectedCells.clear();
     super.invalidate();
+    repaint();
   }
 
   @Override
@@ -125,10 +127,11 @@ public class Canvas extends JPanel {
       Cell cell = new Cell(selectedCell, selectedColor);
 
       if (selectedCells.containsKey(selectedCell)) {
-        if (selectedColor.equals(selectedCells.get(selectedCell).getColor()))
+        if (selectedColor.equals(selectedCells.get(selectedCell).getColor())) {
           selectedCells.remove(selectedCell);
-        else
+        } else {
           selectedCells.get(selectedCell).setColor(selectedColor);
+        }
       } else {
         selectedCells.put(selectedCell, cell);
       }
@@ -140,7 +143,37 @@ public class Canvas extends JPanel {
   private class CanvasMouseMotionListener implements MouseMotionListener {
     @Override
     public void mouseDragged(MouseEvent e) {
+      Point point = e.getPoint();
 
+      int width = getWidth();
+      int height = getHeight();
+
+      int cellWidth = width / columnCount;
+      int cellHeight = height / rowCount;
+
+      selectedCell = null;
+      if (point.getX() >= 0 && point.getY() >= 0) {
+        int column = (int)point.getX() / cellWidth;
+        int row = (int)point.getY() / cellHeight;
+
+        if (column >= 0 && row >= 0 && column < columnCount && row < rowCount) {
+          selectedCell = new Point(column, row);
+        }
+      }
+
+      if (selectedCell != null) {
+        Cell cell = new Cell(selectedCell, selectedColor);
+
+        if (selectedCells.containsKey(selectedCell)) {
+          if (!selectedColor.equals(selectedCells.get(selectedCell).getColor())) {
+            selectedCells.get(selectedCell).setColor(selectedColor);
+          }
+        } else {
+          selectedCells.put(selectedCell, cell);
+        }
+
+        repaint();
+      }
     }
 
     @Override
@@ -155,13 +188,14 @@ public class Canvas extends JPanel {
 
       selectedCell = null;
       if (point.getX() >= 0 && point.getY() >= 0) {
-        int column = (int) point.getX() / cellWidth;
-        int row = (int) point.getY() / cellHeight;
+        int column = (int)point.getX() / cellWidth;
+        int row = (int)point.getY() / cellHeight;
 
         if (column >= 0 && row >= 0 && column < columnCount && row < rowCount) {
           selectedCell = new Point(column, row);
         }
       }
+
       repaint();
     }
   }

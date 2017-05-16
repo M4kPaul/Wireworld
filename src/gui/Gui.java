@@ -17,14 +17,15 @@ public class Gui extends JPanel {
 
   public Gui() {
     ActionListener colorSelect = (ActionEvent e) -> ((Canvas)canvas).setSelectedColor(((JButton)e.getSource()).getBackground());
-    ActionListener startButtonClicked = (ActionEvent e) -> ((Canvas) canvas).startTimer();
-    ActionListener stopButtonClicked = (ActionEvent e) -> ((Canvas) canvas).stopTimer();
+    ActionListener startButtonClicked = (ActionEvent e) -> ((Canvas)canvas).startTimer();
+    ActionListener stopButtonClicked = (ActionEvent e) -> ((Canvas)canvas).stopTimer();
 
     wireButton.addActionListener(colorSelect);
     headButton.addActionListener(colorSelect);
     tailButton.addActionListener(colorSelect);
     startButton.addActionListener(startButtonClicked);
     stopButton.addActionListener(stopButtonClicked);
+    cleanButton.addActionListener((ActionEvent e) -> canvas.invalidate());
 
     add(mainPanel);
   }

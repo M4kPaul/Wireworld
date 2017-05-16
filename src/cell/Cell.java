@@ -23,11 +23,11 @@ public class Cell {
   }
 
   public int getX() {
-    return (int) point.getX();
+    return (int)point.getX();
   }
 
   public int getY() {
-    return (int) point.getY();
+    return (int)point.getY();
   }
 
   private Point getPoint() {
@@ -80,14 +80,15 @@ public class Cell {
   }
 
   private void matchState(Color color) {
-    if (color.equals(new Color(0, 0, 0)))
+    if (color.equals(new Color(0, 0, 0))) {
       state = State.EMPTY;
-    else if (color.equals(new Color(0, 127, 255)))
+    } else if (color.equals(new Color(0, 127, 255))) {
       state = State.ELECTRON_HEAD;
-    else if (color.equals(new Color(255, 64, 0)))
+    } else if (color.equals(new Color(255, 64, 0))) {
       state = State.ELECTRON_TAIL;
-    else if (color.equals(new Color(255, 214, 0)))
+    } else if (color.equals(new Color(255, 214, 0))) {
       state = State.CONDUCTOR;
+    }
   }
 
   @Override
@@ -97,6 +98,6 @@ public class Cell {
 
   @Override
   public boolean equals(Object obj) {
-    return obj instanceof Cell && point.equals(((Cell) obj).getPoint());
+    return obj instanceof Cell && point.equals(((Cell)obj).getPoint());
   }
 }

@@ -1,20 +1,30 @@
+package gui;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class Gui extends JPanel {
+public class Gui extends JPanel {
   private JPanel mainPanel;
   private JButton wireButton;
   private JButton headButton;
   private JButton tailButton;
   private JPanel canvas;
+  private JButton startButton;
+  private JButton stopButton;
+  private JButton cleanButton;
 
-  Gui() {
+  public Gui() {
     ActionListener colorSelect = (ActionEvent e) -> ((Canvas)canvas).setSelectedColor(((JButton)e.getSource()).getBackground());
+    ActionListener startButtonClicked = (ActionEvent e) -> ((Canvas) canvas).startTimer();
+    ActionListener stopButtonClicked = (ActionEvent e) -> ((Canvas) canvas).stopTimer();
+
     wireButton.addActionListener(colorSelect);
     headButton.addActionListener(colorSelect);
     tailButton.addActionListener(colorSelect);
+    startButton.addActionListener(startButtonClicked);
+    stopButton.addActionListener(stopButtonClicked);
 
     add(mainPanel);
   }

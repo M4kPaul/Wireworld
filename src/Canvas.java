@@ -1,70 +1,64 @@
-package gui;
-
-import cell.Cell;
-import cell.State;
-import logic.Logic;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.util.*;
 import java.util.List;
-import java.util.HashMap;
 
 public class Canvas extends JPanel {
-  private int columnCount;
   private int rowCount;
-  private Logic logic;
-  private Timer timer;
+  private int columnCount;
   private Point selectedCell;
+  private Color selectedColor;
   private List<Rectangle> cells;
   private HashMap<Point, Cell> selectedCells;
-  private Color selectedColor = new Color(255, 214, 0);
+  private Dimension preferredSize;
 
-  Canvas() {
-    columnCount = 32;
-    rowCount = 32;
-    logic = new Logic();
+  public Canvas(Grid grid) {
+    rowCount = grid.getRowCount();
+    columnCount = grid.getColumnCount();
+    selectedColor = State.CONDUCTOR;
     cells = new ArrayList<>(columnCount * rowCount);
-    selectedCells = new HashMap<>();
-    timer = new Timer(300, e -> {
-      logic.nextGeneration(this);
-      repaint();
-    });
+    selectedCells =  grid.getSelectedCells();
+    preferredSize = new Dimension(columnCount * 15, rowCount * 15);
 
     addMouseListener(new CanvasMouseListener());
     addMouseMotionListener(new CanvasMouseMotionListener());
+  }
 
+  public void setRowCount(int rowCount) {
+    this.rowCount = rowCount;
+  }
+
+  public void setColumnCount(int columnCount) {
+    this.columnCount = columnCount;
+  }
+
+  public void setCells(List<Rectangle> cells) {
+    this.cells = cells;
   }
 
   public HashMap<Point, Cell> getSelectedCells() {
     return selectedCells;
   }
 
-  public int getCellState(Point point) {
-    Cell cell = selectedCells.get(point);
-
-    if (cell != null) {
-      return cell.getState();
-    }
-    return State.EMPTY;
+  public void setSelectedCells(HashMap<Point, Cell> selectedCells) {
+    this.selectedCells = selectedCells;
   }
 
-  void setSelectedColor(Color selectedColor) {
+  public void setSelectedColor(Color selectedColor) {
     this.selectedColor = selectedColor;
-  }
-
-  void startTimer() {
-    timer.start();
-  }
-
-  void stopTimer() {
-    timer.stop();
   }
 
   @Override
   public Dimension getPreferredSize() {
-    return new Dimension(512, 512);
+    return preferredSize;
+  }
+
+  @Override
+  public void setPreferredSize(Dimension preferredSize) {
+    preferredSize = new Dimension(columnCount * 15, rowCount * 15);
   }
 
   @Override
@@ -72,19 +66,21 @@ public class Canvas extends JPanel {
     selectedCell = null;
     selectedCells.clear();
     super.invalidate();
+
     repaint();
   }
 
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
-    Graphics2D g2d = (Graphics2D)g.create();
+
+    Graphics2D g2D = (Graphics2D) g;
 
     int width = getWidth();
     int height = getHeight();
 
     int cellWidth = width / columnCount;
-    int cellHeight = height / rowCount;
+    int cellHeight =  height / rowCount;
 
     int xOffset = (width - (columnCount * cellWidth)) / 2;
     int yOffset = (height - (rowCount * cellHeight)) / 2;
@@ -101,25 +97,33 @@ public class Canvas extends JPanel {
     for (Cell cell : selectedCells.values()) {
       int index = cell.getX() + (cell.getY() * columnCount);
       Rectangle rectangleCell = cells.get(index);
-      g2d.setColor(cell.getColor());
-      g2d.fill(rectangleCell);
+      g2D.setColor(cell.getState());
+      g2D.fill(rectangleCell);
     }
 
-    g2d.setColor(Color.GRAY);
+    g2D.setColor(Color.GRAY);
     for (Rectangle cell : cells) {
-      g2d.draw(cell);
+      g2D.draw(cell);
     }
 
     if (selectedCell != null) {
       int index = selectedCell.x + (selectedCell.y * columnCount);
       Rectangle cell = cells.get(index);
-      g2d.setColor(selectedColor);
-      g2d.draw(cell);
+      g2D.setColor(selectedColor);
+      g2D.draw(cell);
     }
 
-    g2d.dispose();
+    g2D.dispose();
   }
 
+  public void update() {
+      rowCount = Simulator.getInstance().getGrid().getRowCount();
+      columnCount = Simulator.getInstance().getGrid().getColumnCount();
+      cells = new ArrayList<>(rowCount * columnCount);
+      preferredSize = new Dimension(columnCount * 15, rowCount * 15);
+      selectedCells = Simulator.getInstance().getGrid().getSelectedCells();
+      repaint();
+  }
 
   private class CanvasMouseListener extends MouseAdapter {
     @Override
@@ -127,10 +131,10 @@ public class Canvas extends JPanel {
       Cell cell = new Cell(selectedCell, selectedColor);
 
       if (selectedCells.containsKey(selectedCell)) {
-        if (selectedColor.equals(selectedCells.get(selectedCell).getColor())) {
+        if (selectedColor.equals(selectedCells.get(selectedCell).getState())) {
           selectedCells.remove(selectedCell);
         } else {
-          selectedCells.get(selectedCell).setColor(selectedColor);
+          selectedCells.get(selectedCell).setState(selectedColor);
         }
       } else {
         selectedCells.put(selectedCell, cell);
@@ -153,8 +157,8 @@ public class Canvas extends JPanel {
 
       selectedCell = null;
       if (point.getX() >= 0 && point.getY() >= 0) {
-        int column = (int)point.getX() / cellWidth;
-        int row = (int)point.getY() / cellHeight;
+        int column = (int) point.getX() / cellWidth;
+        int row = (int) point.getY() / cellHeight;
 
         if (column >= 0 && row >= 0 && column < columnCount && row < rowCount) {
           selectedCell = new Point(column, row);
@@ -165,8 +169,8 @@ public class Canvas extends JPanel {
         Cell cell = new Cell(selectedCell, selectedColor);
 
         if (selectedCells.containsKey(selectedCell)) {
-          if (!selectedColor.equals(selectedCells.get(selectedCell).getColor())) {
-            selectedCells.get(selectedCell).setColor(selectedColor);
+          if (!selectedColor.equals(selectedCells.get(selectedCell).getState())) {
+            selectedCells.get(selectedCell).setState(selectedColor);
           }
         } else {
           selectedCells.put(selectedCell, cell);
@@ -188,8 +192,8 @@ public class Canvas extends JPanel {
 
       selectedCell = null;
       if (point.getX() >= 0 && point.getY() >= 0) {
-        int column = (int)point.getX() / cellWidth;
-        int row = (int)point.getY() / cellHeight;
+        int column = (int) point.getX() / cellWidth;
+        int row = (int) point.getY() / cellHeight;
 
         if (column >= 0 && row >= 0 && column < columnCount && row < rowCount) {
           selectedCell = new Point(column, row);
@@ -200,3 +204,4 @@ public class Canvas extends JPanel {
     }
   }
 }
+

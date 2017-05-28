@@ -1,8 +1,6 @@
-package logic;
-
 import java.awt.*;
 
-class CompassPoint {
+public class CompassPoint {
 
   static Point North(int x, int y) {
     return new Point(x, y + 1);

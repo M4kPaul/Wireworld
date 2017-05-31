@@ -1,23 +1,18 @@
-import gui.Gui;
+import model.Simulator;
+import view.WireFrame;
 
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
-import java.awt.EventQueue;
+import javax.swing.*;
+import java.awt.*;
 
-class Main {
+public class Main {
+
   public static void main(String[] args) {
     EventQueue.invokeLater(() -> {
-      try {
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ignored) {
-      }
+      JFrame frame = new WireFrame();
 
-      JFrame frame = new JFrame("Wireworld");
+      frame.setTitle("Wireworld");
       frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      frame.add(new Gui());
-      frame.pack();
+      frame.setResizable(false);
       frame.setVisible(true);
     });
   }

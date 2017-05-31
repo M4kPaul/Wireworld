@@ -1,3 +1,7 @@
+package util;
+
+import model.Grid;
+
 import java.io.*;
 
 public class GridSaver {

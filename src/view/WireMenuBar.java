@@ -1,14 +1,18 @@
+package view;
+
+import model.Grid;
+import model.Simulator;
+import util.GridOpener;
+import util.GridSaver;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class MenuBar extends JMenuBar {
+public class WireMenuBar extends JMenuBar {
   private JMenu fileMenu;
   private JMenu viewMenu;
   private JMenu helpMenu;
@@ -22,10 +26,12 @@ public class MenuBar extends JMenuBar {
   private JMenuItem secondSizeItem;
   private JMenuItem thirdSizeItem;
 
-  public MenuBar() {
+  public WireMenuBar() {
     fileMenu = new JMenu("File");
     viewMenu = new JMenu("View");
     helpMenu = new JMenu("Help");
+
+    gridMenu = new JMenu("Resize grid");
 
     newItem = new JMenuItem("New");
     openItem = new JMenuItem("Open");
@@ -33,18 +39,23 @@ public class MenuBar extends JMenuBar {
     saveAsItem = new JMenuItem("Save as");
     exitItem = new JMenuItem("Exit");
 
-    gridMenu = new JMenu("Resize grid");
+    firstSizeItem = new JMenuItem("29x29", null);
+    secondSizeItem = new JMenuItem("37x37", null);
+    thirdSizeItem = new JMenuItem("47x47", null);
 
-    firstSizeItem = new JMenuItem("32x32", null);
-    secondSizeItem = new JMenuItem("64x64", null);
-    thirdSizeItem = new JMenuItem("128x128", null);
-
+    newItem.addActionListener(null);
     openItem.addActionListener(new OpenAction());
     saveItem.addActionListener(new SaveAction());
+    saveAsItem.addActionListener(null);
+    exitItem.addActionListener(null);
 
-    firstSizeItem.addActionListener(e -> Simulator.getInstance().setSize(32, 32));
-    secondSizeItem.addActionListener(e -> Simulator.getInstance().setSize(64, 64));
-    thirdSizeItem.addActionListener(e -> Simulator.getInstance().setSize(128, 128));
+    firstSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(29, 29));
+    secondSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(37, 37));
+    thirdSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(47, 47));
+
+    add(fileMenu);
+    add(viewMenu);
+    add(helpMenu);
 
     fileMenu.add(newItem);
     fileMenu.add(openItem);
@@ -59,10 +70,6 @@ public class MenuBar extends JMenuBar {
     gridMenu.add(firstSizeItem);
     gridMenu.add(secondSizeItem);
     gridMenu.add(thirdSizeItem);
-
-    add(fileMenu);
-    add(viewMenu);
-    add(helpMenu);
   }
 
   private class OpenAction implements ActionListener {

@@ -1,3 +1,5 @@
+package model;
+
 import java.awt.*;
 import java.io.Serializable;
 
@@ -46,6 +48,6 @@ public class Cell implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    return obj instanceof Cell && point.equals(((Cell)obj).getPoint());
+    return obj instanceof Cell && point.equals(((Cell) obj).getPoint());
   }
 }

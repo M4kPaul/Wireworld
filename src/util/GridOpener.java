@@ -1,7 +1,10 @@
+package util;
+
+import model.Grid;
+
 import java.io.*;
 
 public class GridOpener {
-
   public Grid openGrid(File file) throws IOException, ClassNotFoundException {
     ObjectInputStream inputStream = null;
 

@@ -1,6 +1,12 @@
+package controller;
+
+import model.Cell;
+import model.Grid;
+import model.State;
+
 public class Logic {
 
-  void nextGeneration(Grid grid) {
+  public void nextGeneration(Grid grid) {
     countAdjacentElectronHead(grid);
 
     for (Cell cell : grid.getSelectedCells().values()) {
@@ -9,7 +15,7 @@ public class Logic {
       } else if (cell.getState() == State.ELECTRON_TAIL) {
         cell.setState(State.CONDUCTOR);
       } else if (cell.getAdjacentElectronHeadCount() == 1 || cell.getAdjacentElectronHeadCount() == 2) {
-          cell.setState(State.ELECTRON_HEAD);
+        cell.setState(State.ELECTRON_HEAD);
       }
     }
   }
@@ -50,5 +56,4 @@ public class Logic {
       cell.setAdjacentElectronHeadCount(tmp);
     }
   }
-
 }

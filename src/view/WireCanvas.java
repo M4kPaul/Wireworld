@@ -1,3 +1,10 @@
+package view;
+
+import model.Cell;
+import model.Grid;
+import model.Simulator;
+import model.State;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -6,68 +13,48 @@ import java.awt.event.MouseMotionListener;
 import java.util.*;
 import java.util.List;
 
-public class Canvas extends JPanel {
+public class WireCanvas extends JPanel{
+  private int DEFAULT_CELL_WIDTH = 13;
+  private int DEFAULT_CELL_HEIGHT = 13;
+
   private int rowCount;
   private int columnCount;
+  private Dimension size;
   private Point selectedCell;
   private Color selectedColor;
   private List<Rectangle> cells;
   private HashMap<Point, Cell> selectedCells;
-  private Dimension preferredSize;
 
-  public Canvas(Grid grid) {
+  public WireCanvas(Grid grid) {
     rowCount = grid.getRowCount();
     columnCount = grid.getColumnCount();
+    size = new Dimension(columnCount * DEFAULT_CELL_WIDTH, rowCount * DEFAULT_CELL_HEIGHT );
+
+    selectedCell = null;
     selectedColor = State.CONDUCTOR;
-    cells = new ArrayList<>(columnCount * rowCount);
-    selectedCells =  grid.getSelectedCells();
-    preferredSize = new Dimension(columnCount * 15, rowCount * 15);
 
-    addMouseListener(new CanvasMouseListener());
-    addMouseMotionListener(new CanvasMouseMotionListener());
+    cells = new ArrayList<>();
+    selectedCells = grid.getSelectedCells();
+
+    addMouseListener(new WireMouseListener());
+    addMouseMotionListener(new WireMouseMotionListener());
+
+    setBackground(Color.BLACK);
+    repaint();
   }
 
-  public void setRowCount(int rowCount) {
-    this.rowCount = rowCount;
+  public void setSelectedColor(Color color) {
+    selectedColor = color;
   }
 
-  public void setColumnCount(int columnCount) {
-    this.columnCount = columnCount;
-  }
-
-  public void setCells(List<Rectangle> cells) {
-    this.cells = cells;
-  }
-
-  public HashMap<Point, Cell> getSelectedCells() {
-    return selectedCells;
-  }
-
-  public void setSelectedCells(HashMap<Point, Cell> selectedCells) {
-    this.selectedCells = selectedCells;
-  }
-
-  public void setSelectedColor(Color selectedColor) {
-    this.selectedColor = selectedColor;
+  public void clear() {
+    selectedCells.clear();
+    repaint();
   }
 
   @Override
   public Dimension getPreferredSize() {
-    return preferredSize;
-  }
-
-  @Override
-  public void setPreferredSize(Dimension preferredSize) {
-    preferredSize = new Dimension(columnCount * 15, rowCount * 15);
-  }
-
-  @Override
-  public void invalidate() {
-    selectedCell = null;
-    selectedCells.clear();
-    super.invalidate();
-
-    repaint();
+    return size;
   }
 
   @Override
@@ -88,7 +75,8 @@ public class Canvas extends JPanel {
     if (cells.isEmpty()) {
       for (int row = 0; row < rowCount; row++) {
         for (int col = 0; col < columnCount; col++) {
-          Rectangle cell = new Rectangle(xOffset + (col * cellWidth), yOffset + (row * cellHeight), cellWidth, cellHeight);
+          Rectangle cell = new Rectangle(xOffset + (col * cellWidth),
+                  yOffset + (row * cellHeight), cellWidth, cellHeight);
           cells.add(cell);
         }
       }
@@ -116,16 +104,7 @@ public class Canvas extends JPanel {
     g2D.dispose();
   }
 
-  public void update() {
-      rowCount = Simulator.getInstance().getGrid().getRowCount();
-      columnCount = Simulator.getInstance().getGrid().getColumnCount();
-      cells = new ArrayList<>(rowCount * columnCount);
-      preferredSize = new Dimension(columnCount * 15, rowCount * 15);
-      selectedCells = Simulator.getInstance().getGrid().getSelectedCells();
-      repaint();
-  }
-
-  private class CanvasMouseListener extends MouseAdapter {
+  private class WireMouseListener extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
       Cell cell = new Cell(selectedCell, selectedColor);
@@ -144,7 +123,7 @@ public class Canvas extends JPanel {
     }
   }
 
-  private class CanvasMouseMotionListener implements MouseMotionListener {
+  private class WireMouseMotionListener implements MouseMotionListener {
     @Override
     public void mouseDragged(MouseEvent e) {
       Point point = e.getPoint();
@@ -204,4 +183,3 @@ public class Canvas extends JPanel {
     }
   }
 }
-

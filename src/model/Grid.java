@@ -1,16 +1,20 @@
+package model;
+
 import java.awt.*;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Observable;
 
 public class Grid implements Serializable {
+  private final int DEFAULT_ROW_COUNT = 29;
+  private final int DEFAULT_COLUMN_COUNT = 29;
+
   private int rowCount;
   private int columnCount;
   private HashMap<Point, Cell> selectedCells;
 
   public Grid() {
-    this.rowCount = 32;
-    this.columnCount = 32;
+    this.rowCount = DEFAULT_ROW_COUNT;
+    this.columnCount = DEFAULT_COLUMN_COUNT;
     selectedCells = new HashMap<>();
   }
 
@@ -40,6 +44,7 @@ public class Grid implements Serializable {
     if (cell != null) {
       return cell.getState();
     }
+
     return State.EMPTY;
   }
 }

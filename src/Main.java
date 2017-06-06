@@ -1,4 +1,3 @@
-import model.Simulator;
 import view.WireFrame;
 
 import javax.swing.*;

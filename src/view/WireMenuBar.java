@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class WireMenuBar extends JMenuBar {
+class WireMenuBar extends JMenuBar {
   private JMenu fileMenu;
   private JMenu viewMenu;
   private JMenu helpMenu;
@@ -25,8 +25,9 @@ public class WireMenuBar extends JMenuBar {
   private JMenuItem firstSizeItem;
   private JMenuItem secondSizeItem;
   private JMenuItem thirdSizeItem;
+  private JMenuItem fourthSizeItem;
 
-  public WireMenuBar() {
+  WireMenuBar() {
     fileMenu = new JMenu("File");
     viewMenu = new JMenu("View");
     helpMenu = new JMenu("Help");
@@ -41,7 +42,8 @@ public class WireMenuBar extends JMenuBar {
 
     firstSizeItem = new JMenuItem("29x29", null);
     secondSizeItem = new JMenuItem("37x37", null);
-    thirdSizeItem = new JMenuItem("47x47", null);
+    thirdSizeItem = new JMenuItem("49x49", null);
+    fourthSizeItem = new JMenuItem("Custom", null);
 
     newItem.addActionListener(null);
     openItem.addActionListener(new OpenAction());
@@ -51,7 +53,8 @@ public class WireMenuBar extends JMenuBar {
 
     firstSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(29, 29));
     secondSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(37, 37));
-    thirdSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(47, 47));
+    thirdSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(49, 49));
+    thirdSizeItem.addActionListener(null);
 
     add(fileMenu);
     add(viewMenu);
@@ -70,6 +73,7 @@ public class WireMenuBar extends JMenuBar {
     gridMenu.add(firstSizeItem);
     gridMenu.add(secondSizeItem);
     gridMenu.add(thirdSizeItem);
+    gridMenu.add(fourthSizeItem);
   }
 
   private class OpenAction implements ActionListener {
@@ -89,7 +93,7 @@ public class WireMenuBar extends JMenuBar {
       });
 
       int status = fileChooser.showOpenDialog(null);
-      if(status == JFileChooser.APPROVE_OPTION) {
+      if (status == JFileChooser.APPROVE_OPTION) {
         File file = fileChooser.getSelectedFile();
         GridOpener opener = new GridOpener();
         Simulator simulator = Simulator.getInstance();
@@ -119,7 +123,7 @@ public class WireMenuBar extends JMenuBar {
       });
 
       int status = fileChooser.showSaveDialog(null);
-      if(status == JFileChooser.APPROVE_OPTION) {
+      if (status == JFileChooser.APPROVE_OPTION) {
         File file = fileChooser.getSelectedFile();
         GridSaver saver = new GridSaver();
         try {

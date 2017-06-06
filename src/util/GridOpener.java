@@ -9,8 +9,8 @@ public class GridOpener {
     ObjectInputStream inputStream = null;
 
     try {
-      inputStream = new ObjectInputStream( new BufferedInputStream(new FileInputStream(file)));
-      return (Grid) inputStream.readObject();
+      inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
+      return (Grid)inputStream.readObject();
     } finally {
       if (inputStream != null) {
         inputStream.close();

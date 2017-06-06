@@ -24,36 +24,36 @@ public class Logic {
     for (Cell cell : grid.getSelectedCells().values()) {
       int x = cell.getX();
       int y = cell.getY();
-      int tmp = 0;
+      int adjacent = 0;
 
       if (cell.getState().equals(State.CONDUCTOR)) {
         if (grid.getCellState(CompassPoint.North(x, y)) == State.ELECTRON_HEAD) {
-          tmp++;
+          adjacent++;
         }
         if (grid.getCellState(CompassPoint.NorthEast(x, y)) == State.ELECTRON_HEAD) {
-          tmp++;
+          adjacent++;
         }
         if (grid.getCellState(CompassPoint.East(x, y)) == State.ELECTRON_HEAD) {
-          tmp++;
+          adjacent++;
         }
         if (grid.getCellState(CompassPoint.SouthEast(x, y)) == State.ELECTRON_HEAD) {
-          tmp++;
+          adjacent++;
         }
         if (grid.getCellState(CompassPoint.South(x, y)) == State.ELECTRON_HEAD) {
-          tmp++;
+          adjacent++;
         }
         if (grid.getCellState(CompassPoint.SouthWest(x, y)) == State.ELECTRON_HEAD) {
-          tmp++;
+          adjacent++;
         }
         if (grid.getCellState(CompassPoint.West(x, y)) == State.ELECTRON_HEAD) {
-          tmp++;
+          adjacent++;
         }
         if (grid.getCellState(CompassPoint.NorthWest(x, y)) == State.ELECTRON_HEAD) {
-          tmp++;
+          adjacent++;
         }
       }
 
-      cell.setAdjacentElectronHeadCount(tmp);
+      cell.setAdjacentElectronHeadCount(adjacent);
     }
   }
 }

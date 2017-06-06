@@ -5,14 +5,14 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class Grid implements Serializable {
-  private final int DEFAULT_ROW_COUNT = 29;
-  private final int DEFAULT_COLUMN_COUNT = 29;
+  private final int DEFAULT_ROW_COUNT = 32;
+  private final int DEFAULT_COLUMN_COUNT = 32;
 
   private int rowCount;
   private int columnCount;
   private HashMap<Point, Cell> selectedCells;
 
-  public Grid() {
+  Grid() {
     this.rowCount = DEFAULT_ROW_COUNT;
     this.columnCount = DEFAULT_COLUMN_COUNT;
     selectedCells = new HashMap<>();
@@ -22,7 +22,7 @@ public class Grid implements Serializable {
     return columnCount;
   }
 
-  public void setColumnCount(int columnCount) {
+  void setColumnCount(int columnCount) {
     this.columnCount = columnCount;
   }
 
@@ -30,7 +30,7 @@ public class Grid implements Serializable {
     return rowCount;
   }
 
-  public void setRowCount(int rowCount) {
+  void setRowCount(int rowCount) {
     this.rowCount = rowCount;
   }
 

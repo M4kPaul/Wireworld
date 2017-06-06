@@ -4,12 +4,15 @@ import model.Simulator;
 import model.State;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class WireGui extends JPanel {
   private JPanel controlPanel;
   private JPanel drawPanel;
   private JPanel runPanel;
-  private JPanel emptyPanel;
+  private JPanel prebuiltCircuitsPanel;
   private JLabel conductorLabel;
   private JLabel electronTailLabel;
   private JLabel electronHeadLabel;
@@ -20,11 +23,14 @@ public class WireGui extends JPanel {
   private JButton startButton;
   private JButton stopButton;
   private JSlider speedSlider;
+  private JComboBox<String> prebuiltCircuitsList;
+  private JLabel selectedCircuitLabel;
+  private JPanel emptyPanel;
 
-  public WireGui() {
-    electronHeadLabel.setIcon(new ImageIcon("electron_head.png"));
-    electronTailLabel.setIcon(new ImageIcon("electron_tail.png"));
-    conductorLabel.setIcon(new ImageIcon("conductor.png"));
+  WireGui() {
+    electronHeadLabel.setIcon(new ImageIcon("src/drawable/electron_head.png"));
+    electronTailLabel.setIcon(new ImageIcon("src/drawable/electron_tail.png"));
+    conductorLabel.setIcon(new ImageIcon("src/drawable/conductor.png"));
 
     electronHeadRadioButton.addActionListener(e -> Simulator.getInstance().getCanvas().setSelectedColor(State.ELECTRON_HEAD));
     electronTailRadioButton.addActionListener(e -> Simulator.getInstance().getCanvas().setSelectedColor(State.ELECTRON_TAIL));
@@ -34,6 +40,33 @@ public class WireGui extends JPanel {
     stopButton.addActionListener(e -> Simulator.getInstance().stop());
     speedSlider.addChangeListener(e -> Simulator.getInstance().setTimerDelay(1200 - speedSlider.getValue()));
 
+    selectedCircuitLabel.setIcon(new ImageIcon("src/drawable/Diode.png"));
+    prebuiltCircuitsList.addItemListener(e -> {
+      selectedCircuitLabel.setIcon(new ImageIcon("src/drawable/" + e.getItem() + ".png"));
+      if (selectedCircuitLabel.getBorder() != null) {
+        Simulator.getInstance().getCanvas().setStructureName((String)prebuiltCircuitsList.getSelectedItem());
+      }
+    });
+
+    selectedCircuitLabel.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        if (selectedCircuitLabel.getBorder() == null) {
+          selectedCircuitLabel.setBorder(BorderFactory.createLineBorder(Color.GREEN, 5));
+          Simulator.getInstance().getCanvas().setStructureName((String)prebuiltCircuitsList.getSelectedItem());
+        } else {
+          selectedCircuitLabel.setBorder(null);
+          Simulator.getInstance().getCanvas().setStructureName(null);
+        }
+      }
+    });
+
     add(controlPanel);
+  }
+
+  private void createUIComponents() {
+    prebuiltCircuitsList = new JComboBox<>();
+    prebuiltCircuitsList.addItem("Diode");
+    prebuiltCircuitsList.addItem("Xor");
   }
 }

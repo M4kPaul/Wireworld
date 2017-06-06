@@ -1,11 +1,16 @@
-import model.Simulator;
-import view.WireFrame;
+package wireworld;
+
+import wireworld.view.WireFrame;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Main {
 
+  /**
+   * Klasa główna programu.
+   * @param args argumenty wywołania programu
+   */
   public static void main(String[] args) {
     EventQueue.invokeLater(() -> {
       JFrame frame = new WireFrame();

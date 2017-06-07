@@ -62,7 +62,7 @@ class WireMenuBar extends JMenuBar {
     gridMenu.add(firstSizeItem);
     gridMenu.add(secondSizeItem);
     gridMenu.add(thirdSizeItem);
-    gridMenu.add(fourthSizeItem);
+    // gridMenu.add(fourthSizeItem);
   }
 
   /**

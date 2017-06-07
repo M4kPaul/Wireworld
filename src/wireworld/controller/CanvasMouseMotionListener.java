@@ -1,7 +1,7 @@
-package view.wireCanvas;
+package wireworld.controller;
 
-import model.Cell;
-import model.Simulator;
+import wireworld.model.Cell;
+import wireworld.model.Simulator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,17 +9,26 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.HashMap;
 
+/**
+ * Obsługuje zdarzenia związane z ruchem myszy.
+ */
 public class CanvasMouseMotionListener implements MouseMotionListener {
-  private Canvas canvas;
+  private wireworld.view.Canvas canvas;
   private int rowCount;
   private int columnCount;
   private Point selectedCell;
   private Color selectedColor;
   private HashMap<Point, Cell> selectedCells;
 
-  CanvasMouseMotionListener() {
+  /**
+   * Tworzy słuchacza obsługującego zdarzenia związane z ruchem myszy.
+   */
+  public CanvasMouseMotionListener() {
   }
 
+  /**
+   *
+   */
   private void refreshData() {
     canvas = Simulator.getInstance().getCanvas();
     rowCount = canvas.getRowCount();
@@ -29,6 +38,10 @@ public class CanvasMouseMotionListener implements MouseMotionListener {
     selectedCells = canvas.getSelectedCells();
   }
 
+  /**
+   *
+   * @param e zdarzenie odebrane przez słuchacza
+   */
   private void updateCell(MouseEvent e) {
     Point point = e.getPoint();
 
@@ -57,6 +70,10 @@ public class CanvasMouseMotionListener implements MouseMotionListener {
     }
   }
 
+  /**
+   * Metoda wywoływana, gdy słuchacz odbierze zdarzenie przeciągnięcia myszy z wciśniętym przyciskiem.
+   * @param e zdarzenie odebrane przez słuchacza
+   */
   @Override
   public void mouseDragged(MouseEvent e) {
     refreshData();
@@ -87,6 +104,10 @@ public class CanvasMouseMotionListener implements MouseMotionListener {
     }
   }
 
+  /**
+   *  Metoda wywoływana, gdy słuchacz odbierze zdarzenie poruszenia myszy.
+   * @param e zdarzenie odebrane przez słuchacza
+   */
   @Override
   public void mouseMoved(MouseEvent e) {
     refreshData();

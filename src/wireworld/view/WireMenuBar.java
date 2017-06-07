@@ -1,9 +1,9 @@
-package view;
+package wireworld.view;
 
-import model.Grid;
-import model.Simulator;
-import util.GridOpener;
-import util.GridSaver;
+import wireworld.model.Grid;
+import wireworld.model.Simulator;
+import wireworld.util.GridOpener;
+import wireworld.util.GridSaver;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -12,44 +12,39 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Odpowiada za wygląd i obsługę paska menu.
+ */
 class WireMenuBar extends JMenuBar {
   private JMenu fileMenu;
   private JMenu viewMenu;
-  private JMenu helpMenu;
   private JMenu gridMenu;
-  private JMenuItem newItem;
   private JMenuItem openItem;
   private JMenuItem saveItem;
-  private JMenuItem saveAsItem;
-  private JMenuItem exitItem;
   private JMenuItem firstSizeItem;
   private JMenuItem secondSizeItem;
   private JMenuItem thirdSizeItem;
   private JMenuItem fourthSizeItem;
 
+  /**
+   * Tworzy i inicjalizuje pasek menu.
+   */
   WireMenuBar() {
     fileMenu = new JMenu("File");
     viewMenu = new JMenu("View");
-    helpMenu = new JMenu("Help");
 
     gridMenu = new JMenu("Resize grid");
 
-    newItem = new JMenuItem("New");
     openItem = new JMenuItem("Open");
     saveItem = new JMenuItem("Save");
-    saveAsItem = new JMenuItem("Save as");
-    exitItem = new JMenuItem("Exit");
 
     firstSizeItem = new JMenuItem("29x29", null);
     secondSizeItem = new JMenuItem("37x37", null);
     thirdSizeItem = new JMenuItem("49x49", null);
     fourthSizeItem = new JMenuItem("Custom", null);
 
-    newItem.addActionListener(null);
     openItem.addActionListener(new OpenAction());
     saveItem.addActionListener(new SaveAction());
-    saveAsItem.addActionListener(null);
-    exitItem.addActionListener(null);
 
     firstSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(29, 29));
     secondSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(37, 37));
@@ -58,15 +53,9 @@ class WireMenuBar extends JMenuBar {
 
     add(fileMenu);
     add(viewMenu);
-    add(helpMenu);
 
-    fileMenu.add(newItem);
     fileMenu.add(openItem);
-    fileMenu.addSeparator();
     fileMenu.add(saveItem);
-    fileMenu.add(saveAsItem);
-    fileMenu.addSeparator();
-    fileMenu.add(exitItem);
 
     viewMenu.add(gridMenu);
 
@@ -76,17 +65,23 @@ class WireMenuBar extends JMenuBar {
     gridMenu.add(fourthSizeItem);
   }
 
+  /**
+   * Klasa wewnętrzna odpowiadająca za obsługę zdarzenia wczytywania siatki komórek z pliku do programu.
+   */
   private class OpenAction implements ActionListener {
+
+    /**
+     * Metoda wywoływana, gdy słuchacz odbierze zdarzenie.
+     * @param e zdarzenie odebrane przez słuchacza
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
       JFileChooser fileChooser = new JFileChooser();
 
       fileChooser.setFileFilter(new FileFilter() {
-
         public String getDescription() {
           return "Wireworld file (*.wwd)";
         }
-
         public boolean accept(File f) {
           return f.isDirectory() || f.getName().toLowerCase().endsWith(".wwd");
         }
@@ -100,23 +95,29 @@ class WireMenuBar extends JMenuBar {
         try {
           simulator.setGrid(opener.openGrid(file));
         } catch (IOException | ClassNotFoundException ex) {
-          JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(null, ex, "Error!", JOptionPane.ERROR_MESSAGE);
         }
       }
     }
   }
 
+  /**
+   * Klassa wewnętrzna odpowiadająca za obsługę zdarzenia zapisywania siatki komórek z programu do pliku.
+   */
   private class SaveAction implements ActionListener {
+
+    /**
+     * Metoda wywoływana, gdy słuchacz odbierze zdarzenie zapisywania.
+     * @param e zdarzenie odebrane przez słuchacza
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
       JFileChooser fileChooser = new JFileChooser();
 
       fileChooser.setFileFilter(new FileFilter() {
-
         public String getDescription() {
           return "Wireworld file (*.wwd)";
         }
-
         public boolean accept(File f) {
           return f.isDirectory() || f.getName().toLowerCase().endsWith(".wwd");
         }
@@ -124,13 +125,13 @@ class WireMenuBar extends JMenuBar {
 
       int status = fileChooser.showSaveDialog(null);
       if (status == JFileChooser.APPROVE_OPTION) {
-        File file = fileChooser.getSelectedFile();
+        File file = new File(fileChooser.getSelectedFile() + ".wwd");
         GridSaver saver = new GridSaver();
         try {
           Grid grid = Simulator.getInstance().getGrid();
           saver.saveGrid(grid, file);
         } catch (IOException ex) {
-          JOptionPane.showMessageDialog(null, ex, "Error", JOptionPane.ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(null, ex, "Error!", JOptionPane.ERROR_MESSAGE);
         }
       }
     }

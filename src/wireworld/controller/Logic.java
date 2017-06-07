@@ -1,11 +1,18 @@
-package controller;
+package wireworld.controller;
 
-import model.Cell;
-import model.Grid;
-import model.State;
+import wireworld.model.Cell;
+import wireworld.model.Grid;
+import wireworld.model.State;
 
+/**
+ * Zawiera informacje o sposobie tworzenia kolejnych generacji.
+ */
 public class Logic {
 
+  /**
+   * Tworzy następną generację komórek według ustalonej logiki.
+   * @param grid siatka komórek
+   */
   public void nextGeneration(Grid grid) {
     countAdjacentElectronHead(grid);
 
@@ -20,6 +27,10 @@ public class Logic {
     }
   }
 
+  /**
+   * Wylicza danym komórkom siatki ich sąsiadów będących głowami elektronów.
+   * @param grid siatka komórek
+   */
   private void countAdjacentElectronHead(Grid grid) {
     for (Cell cell : grid.getSelectedCells().values()) {
       int x = cell.getX();

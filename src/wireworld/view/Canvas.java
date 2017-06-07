@@ -32,6 +32,7 @@ public class Canvas extends JPanel {
    * Tworzy i inicjalizuje planszę dla danej siatki komórek.
    *
    * @param grid dana siatka komórek
+   * @param firstInit stan inicjalizacji rozmiaru okna
    */
   public Canvas(Grid grid, boolean firstInit) {
     rowCount = grid.getRowCount();

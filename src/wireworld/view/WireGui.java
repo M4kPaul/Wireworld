@@ -1,13 +1,16 @@
-package view;
+package wireworld.view;
 
-import model.Simulator;
-import model.State;
+import wireworld.model.Simulator;
+import wireworld.model.State;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Odowiada za wygląd i obsługę panelu do kontroli działania programu.
+ */
 public class WireGui extends JPanel {
   private JPanel controlPanel;
   private JPanel drawPanel;
@@ -27,10 +30,13 @@ public class WireGui extends JPanel {
   private JLabel selectedCircuitLabel;
   private JPanel emptyPanel;
 
+  /**
+   * Tworzy i inicjalizuje panel do kontorli działania programu.
+   */
   WireGui() {
-    electronHeadLabel.setIcon(new ImageIcon("src/drawable/electron_head.png"));
-    electronTailLabel.setIcon(new ImageIcon("src/drawable/electron_tail.png"));
-    conductorLabel.setIcon(new ImageIcon("src/drawable/conductor.png"));
+    electronHeadLabel.setIcon(new ImageIcon("src/wireworld/drawable/electron_head.png"));
+    electronTailLabel.setIcon(new ImageIcon("src/wireworld/drawable/electron_tail.png"));
+    conductorLabel.setIcon(new ImageIcon("src/wireworld/drawable/conductor.png"));
 
     electronHeadRadioButton.addActionListener(e -> Simulator.getInstance().getCanvas().setSelectedColor(State.ELECTRON_HEAD));
     electronTailRadioButton.addActionListener(e -> Simulator.getInstance().getCanvas().setSelectedColor(State.ELECTRON_TAIL));
@@ -40,9 +46,9 @@ public class WireGui extends JPanel {
     stopButton.addActionListener(e -> Simulator.getInstance().stop());
     speedSlider.addChangeListener(e -> Simulator.getInstance().setTimerDelay(1200 - speedSlider.getValue()));
 
-    selectedCircuitLabel.setIcon(new ImageIcon("src/drawable/Diode.png"));
+    selectedCircuitLabel.setIcon(new ImageIcon("src/wireworld/drawable/Diode.png"));
     prebuiltCircuitsList.addItemListener(e -> {
-      selectedCircuitLabel.setIcon(new ImageIcon("src/drawable/" + e.getItem() + ".png"));
+      selectedCircuitLabel.setIcon(new ImageIcon("src/wireworld/drawable/" + e.getItem() + ".png"));
       if (selectedCircuitLabel.getBorder() != null) {
         Simulator.getInstance().getCanvas().setStructureName((String)prebuiltCircuitsList.getSelectedItem());
       }
@@ -64,6 +70,9 @@ public class WireGui extends JPanel {
     add(controlPanel);
   }
 
+  /**
+   * Inicjalizuje niestandardowe komponenty panelu.
+   */
   private void createUIComponents() {
     prebuiltCircuitsList = new JComboBox<>();
     prebuiltCircuitsList.addItem("Diode");

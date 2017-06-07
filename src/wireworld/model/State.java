@@ -1,7 +1,10 @@
-package model;
+package wireworld.model;
 
 import java.awt.*;
 
+/**
+ * Zawiera stałe przypisujące stanom komórek określone kolory.
+ */
 public interface State {
   Color EMPTY = new Color(0, 0, 0);
   Color ELECTRON_HEAD = new Color(0, 127, 255);

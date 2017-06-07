@@ -1,8 +1,8 @@
-package view.wireCanvas;
+package wireworld.controller;
 
-import model.Cell;
-import model.Simulator;
-import view.Structures;
+import wireworld.model.Cell;
+import wireworld.model.Simulator;
+import wireworld.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,8 +10,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
+/**
+ * Obsługuje zdarzenia związane z naciśnięciem przycisku myszy.
+ */
 public class CanvasMouseClickListener extends MouseAdapter {
-  private Canvas canvas;
+  private wireworld.view.Canvas canvas;
   private int rowCount;
   private int columnCount;
   private Point selectedCell;
@@ -20,10 +23,17 @@ public class CanvasMouseClickListener extends MouseAdapter {
   private HashMap<Point, Cell> selectedCells;
   private HashMap<String, HashMap<Point, Cell>> prebuiltStructures;
 
-  CanvasMouseClickListener() {
+  /**
+   * Tworzy słuchacza obsługującego zdarzenia związane z naciśnięciem przycisku myszy.
+   */
+  public CanvasMouseClickListener() {
     prebuiltStructures = new Structures().getPrebuilt();
   }
 
+  /**
+   * Metoda wywoływana, gdy słuchacz odbierze zdarzenie naciśnięcia przycisku myszy.
+   * @param e zdarzenie odebrane przez słuchacza
+   */
   @Override
   public void mouseClicked(MouseEvent e) {
     canvas = Simulator.getInstance().getCanvas();

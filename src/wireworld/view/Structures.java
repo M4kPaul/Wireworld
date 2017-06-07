@@ -1,7 +1,7 @@
-package view;
+package wireworld.view;
 
-import model.Cell;
-import model.State;
+import wireworld.model.Cell;
+import wireworld.model.State;
 
 import java.awt.*;
 import java.util.HashMap;

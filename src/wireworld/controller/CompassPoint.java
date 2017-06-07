@@ -10,6 +10,7 @@ class CompassPoint {
 
   /**
    * Zwraca punkt znajdujący się na północ od danego punktu.
+   *
    * @param x współrzędna X danego punktu
    * @param y współrzędna Y danego punktu
    * @return punktu znajdujący się na północ od danego punktu
@@ -20,6 +21,7 @@ class CompassPoint {
 
   /**
    * Zwraca punkt znajdujący się na północny-wschód od danego punktu.
+   *
    * @param x współrzędna X danego punktu
    * @param y współrzędna Y danego punktu
    * @return punktu znajdujący się na północny-wschód od danego punktu
@@ -30,6 +32,7 @@ class CompassPoint {
 
   /**
    * Zwraca punkt znajdujący się na wschód od danego punktu.
+   *
    * @param x współrzędna X danego punktu
    * @param y współrzędna Y danego punktu
    * @return punktu znajdujący się na wschód od danego punktu
@@ -40,6 +43,7 @@ class CompassPoint {
 
   /**
    * Zwraca punkt znajdujący się na południowy-wschód od danego punktu.
+   *
    * @param x współrzędna X danego punktu
    * @param y współrzędna Y danego punktu
    * @return punktu znajdujący się na południowy-wschód od danego punktu
@@ -50,6 +54,7 @@ class CompassPoint {
 
   /**
    * Zwraca punkt znajdujący się na południe od danego punktu.
+   *
    * @param x współrzędna X danego punktu
    * @param y współrzędna Y danego punktu
    * @return punktu znajdujący się na południe od danego punktu
@@ -60,6 +65,7 @@ class CompassPoint {
 
   /**
    * Zwraca punkt znajdujący się na południowy-zachód od danego punktu.
+   *
    * @param x współrzędna X danego punktu
    * @param y współrzędna Y danego punktu
    * @return punktu znajdujący się na południowy-zachód od danego punktu
@@ -70,6 +76,7 @@ class CompassPoint {
 
   /**
    * Zwraca punkt znajdujący się na zachód od danego punktu.
+   *
    * @param x współrzędna X danego punktu
    * @param y współrzędna Y danego punktu
    * @return punktu znajdujący się na zachód od danego punktu
@@ -80,6 +87,7 @@ class CompassPoint {
 
   /**
    * Zwraca punkt znajdujący się na północny-zachód od danego punktu.
+   *
    * @param x współrzędna X danego punktu
    * @param y współrzędna Y danego punktu
    * @return punktu znajdujący się na północny-zachód od danego punktu

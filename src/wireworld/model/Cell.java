@@ -13,6 +13,7 @@ public class Cell implements Serializable {
 
   /**
    * Tworzy i inicjalizuje komórkę w określonym przez punkt położeniu z podanym stanem.
+   *
    * @param point punkt określający położenie danej komórki
    * @param state stan danej komórki
    */
@@ -23,6 +24,7 @@ public class Cell implements Serializable {
 
   /**
    * Zwraca położenie danej komórki określone za pomocą punktu.
+   *
    * @return punkt określający położenie danej komórki.
    */
   private Point getPoint() {
@@ -31,6 +33,7 @@ public class Cell implements Serializable {
 
   /**
    * Zwraca współrzędną X położenia danej komórki.
+   *
    * @return współrzędna X położenia danej komórki
    */
   public int getX() {
@@ -39,6 +42,7 @@ public class Cell implements Serializable {
 
   /**
    * Zwraca współrzędną Y położenia danej komórki.
+   *
    * @return współrzędna Y położenia danej komórki
    */
   public int getY() {
@@ -47,6 +51,7 @@ public class Cell implements Serializable {
 
   /**
    * Zwraca stan danej komórki.
+   *
    * @return stan danej komórki
    */
   public Color getState() {
@@ -55,6 +60,7 @@ public class Cell implements Serializable {
 
   /**
    * Ustawia stan danej komórki.
+   *
    * @param state nowy stan danej komórki.
    */
   public void setState(Color state) {
@@ -63,6 +69,7 @@ public class Cell implements Serializable {
 
   /**
    * Zwraca liczbę sąsiadów danej komórki będących głowami elektronów.
+   *
    * @return liczba sąsiadów danej komórki będących głowami elektronów
    */
   public int getAdjacentElectronHeadCount() {
@@ -71,6 +78,7 @@ public class Cell implements Serializable {
 
   /**
    * Ustawia liczbę sąsiadów danej komórki będących głowami elektronów.
+   *
    * @param adjacentElectronHeadCount nowa liczba sąsiadów danej komórki będących głowami elektronów
    */
   public void setAdjacentElectronHeadCount(int adjacentElectronHeadCount) {
@@ -79,6 +87,7 @@ public class Cell implements Serializable {
 
   /**
    * Zwraca {@code hashcode} danej komórki wyznaczony z jej położenia.
+   *
    * @return {@code hashcode} danej komórki wyznaczony z jej położenia
    */
   @Override
@@ -88,6 +97,7 @@ public class Cell implements Serializable {
 
   /**
    * Określa, czy dwie komórki są równe porównując ich położenie.
+   *
    * @param obj obiekt porównywany z daną komórką
    * @return {@code true} jeśli obiekt, porównywany z daną komórką, jest typu {@code Cell} i ma jednakowe położenie;
    * {@code false} w przeciwnym wypadku

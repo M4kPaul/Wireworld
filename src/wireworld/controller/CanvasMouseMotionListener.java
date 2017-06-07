@@ -20,14 +20,9 @@ public class CanvasMouseMotionListener implements MouseMotionListener {
   private Color selectedColor;
   private HashMap<Point, Cell> selectedCells;
 
-  /**
-   * Tworzy słuchacza obsługującego zdarzenia związane z ruchem myszy.
-   */
-  public CanvasMouseMotionListener() {
-  }
 
   /**
-   *
+   * Odświeża wartości zmiennych na zgodne z obecnym stanem
    */
   private void refreshData() {
     canvas = Simulator.getInstance().getCanvas();
@@ -39,10 +34,11 @@ public class CanvasMouseMotionListener implements MouseMotionListener {
   }
 
   /**
+   * Aktualizuje wartość komórki, nad którą znajduje się kursor myszy
    *
    * @param e zdarzenie odebrane przez słuchacza
    */
-  private void updateCell(MouseEvent e) {
+  private void updateSelectedCell(MouseEvent e) {
     Point point = e.getPoint();
 
     int width = canvas.getWidth();
@@ -72,46 +68,50 @@ public class CanvasMouseMotionListener implements MouseMotionListener {
 
   /**
    * Metoda wywoływana, gdy słuchacz odbierze zdarzenie przeciągnięcia myszy z wciśniętym przyciskiem.
+   *
    * @param e zdarzenie odebrane przez słuchacza
    */
   @Override
   public void mouseDragged(MouseEvent e) {
-    refreshData();
-    updateCell(e);
-
-    if (selectedCell != null) {
-      Cell cell = new Cell(selectedCell, selectedColor);
-
-      if (SwingUtilities.isLeftMouseButton(e)) {
-        if (selectedCells.containsKey(selectedCell)) {
-          if (!selectedColor.equals(selectedCells.get(selectedCell).getState())) {
-            selectedCells.get(selectedCell).setState(selectedColor);
-          }
-        } else {
-          selectedCells.put(selectedCell, cell);
-        }
-      } else {
-        if (selectedCells.containsKey(selectedCell)) {
-          selectedCells.remove(selectedCell);
-        }
-      }
+    if (Simulator.getInstance().getSelectedCircuitName() == null) {
+      refreshData();
+      updateSelectedCell(e);
 
       if (selectedCell != null) {
-        canvas.setSelectedCells(selectedCells);
-        canvas.setSelectedCell(selectedCell);
-        canvas.repaint();
+        Cell cell = new Cell(selectedCell, selectedColor);
+
+        if (SwingUtilities.isLeftMouseButton(e)) {
+          if (selectedCells.containsKey(selectedCell)) {
+            if (!selectedColor.equals(selectedCells.get(selectedCell).getState())) {
+              selectedCells.get(selectedCell).setState(selectedColor);
+            }
+          } else {
+            selectedCells.put(selectedCell, cell);
+          }
+        } else {
+          if (selectedCells.containsKey(selectedCell)) {
+            selectedCells.remove(selectedCell);
+          }
+        }
+
+        if (selectedCell != null) {
+          canvas.setSelectedCells(selectedCells);
+          canvas.setSelectedCell(selectedCell);
+          canvas.repaint();
+        }
       }
     }
   }
 
   /**
-   *  Metoda wywoływana, gdy słuchacz odbierze zdarzenie poruszenia myszy.
+   * Metoda wywoływana, gdy słuchacz odbierze zdarzenie poruszenia myszy.
+   *
    * @param e zdarzenie odebrane przez słuchacza
    */
   @Override
   public void mouseMoved(MouseEvent e) {
     refreshData();
-    updateCell(e);
+    updateSelectedCell(e);
 
     if (selectedCell != null) {
       canvas.setSelectedCell(selectedCell);

@@ -26,6 +26,7 @@ public class Grid implements Serializable {
 
   /**
    * Zwraca liczbę wierszy danej siatki.
+   *
    * @return liczba wierszy danej siatki
    */
   public int getRowCount() {
@@ -34,6 +35,7 @@ public class Grid implements Serializable {
 
   /**
    * Ustawia liczbę wierszy danej siatki.
+   *
    * @param rowCount nowa liczba wierszy danej siatki.
    */
   void setRowCount(int rowCount) {
@@ -42,6 +44,7 @@ public class Grid implements Serializable {
 
   /**
    * Zwraca liczbę kolumn danej siatki.
+   *
    * @return liczba kolumn danej siatki
    */
   public int getColumnCount() {
@@ -50,6 +53,7 @@ public class Grid implements Serializable {
 
   /**
    * Ustawia liczbę kolumn danej siatki.
+   *
    * @param columnCount nowa liczba kolumn danej siatki
    */
   void setColumnCount(int columnCount) {
@@ -58,6 +62,7 @@ public class Grid implements Serializable {
 
   /**
    * Zwraca komórki siatki niębędące w stanie pustym.
+   *
    * @return tablica z hashowaniem zawierająca komórki danej siatki niebędące w stanie pustym
    * @see HashMap
    */
@@ -67,6 +72,7 @@ public class Grid implements Serializable {
 
   /**
    * Zwraca stan danej komórki siatki.
+   *
    * @param point punkt określający położenie komórki
    * @return stan danej komórki
    */

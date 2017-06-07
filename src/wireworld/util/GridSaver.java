@@ -11,6 +11,7 @@ public class GridSaver {
 
   /**
    * Zapisuje siatkę komórek z programu do danego pliku.
+   *
    * @param grid siatka komórek
    * @param file dany plik do zapisu siatki komórek
    * @throws IOException wyjątek powstał w wyniku nieudanej lub przerwanej operacji zapisywania siatki komórek

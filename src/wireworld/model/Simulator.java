@@ -13,30 +13,21 @@ import java.util.Observer;
  * Zarządza całym procesem pracy automatu komórkowego.
  */
 public class Simulator extends Observable {
+  private static Simulator instance = new Simulator();
   private final int DEFAULT_DELAY = 550;
-
   private List<Observer> observers;
   private Grid grid;
   private JPanel canvas;
   private Logic logic;
   private Timer timer;
-
-  private static Simulator instance = new Simulator();
-
-  /**
-   * Zwraca jedyną instancję klasy {@code Simulator}.
-   * @return jedyna instancja klasy {@code Simulator}
-   */
-  public static Simulator getInstance() {
-    return instance;
-  }
+  private String selectedCircuitName;
 
   /**
    * Tworzy i inicjalizuje symulator zarządzający automatem komórkowym.
    */
   private Simulator() {
     grid = new Grid();
-    canvas = new Canvas(grid);
+    canvas = new Canvas(grid, true);
     logic = new Logic();
     timer = new Timer(DEFAULT_DELAY, e -> {
       logic.nextGeneration(grid);
@@ -46,7 +37,17 @@ public class Simulator extends Observable {
   }
 
   /**
+   * Zwraca jedyną instancję klasy {@code Simulator}.
+   *
+   * @return jedyna instancja klasy {@code Simulator}
+   */
+  public static Simulator getInstance() {
+    return instance;
+  }
+
+  /**
    * Zwraca siatkę komórek.
+   *
    * @return siatka komórek
    */
   public Grid getGrid() {
@@ -55,16 +56,18 @@ public class Simulator extends Observable {
 
   /**
    * Ustawia siatkę komórek, zmienia planszę wizualizującą siatkę komórek i powiadamia obserwatorów o zmianie.
+   *
    * @param grid now siatka komórek
    */
   public void setGrid(Grid grid) {
     this.grid = grid;
-    canvas = new Canvas(grid);
+    canvas = new Canvas(grid, false);
     notifyObservers();
   }
 
   /**
    * Zwraca planszę wizualizującą siatkę komórek.
+   *
    * @return plansza wizualizująca siatkę komórek
    */
   public Canvas getCanvas() {
@@ -74,23 +77,47 @@ public class Simulator extends Observable {
   /**
    * Ustawia nowy rozmiar siatki komórek, zmienia planszę wizualizującą siatkę komórek i powiadamia obserwatorów o
    * zmianie.
+   *
    * @param columnCount nowa liczba kolumn siatki komórek
-   * @param rowCount nowa liczba wierszy siatki komórek
+   * @param rowCount    nowa liczba wierszy siatki komórek
    */
   public void setGridSize(int columnCount, int rowCount) {
-    grid.setColumnCount(columnCount);
-    grid.setRowCount(rowCount);
+    if (grid.getColumnCount() == columnCount && grid.getRowCount() == rowCount) {
+      canvas = new Canvas(grid, true);
+    } else {
+      grid.setColumnCount(columnCount);
+      grid.setRowCount(rowCount);
 
-    canvas = new Canvas(grid);
+      canvas = new Canvas(grid, false);
+    }
     notifyObservers();
   }
 
   /**
    * Ustawia nowe opóźnienie stopera.
+   *
    * @param delay nowe opóźnienie stopera
    */
   public void setTimerDelay(int delay) {
     timer.setDelay(delay);
+  }
+
+  /**
+   * Zwraca nazwę wybranego gotowego obwodu
+   *
+   * @return nazwa wybranego gotowego obwodu
+   */
+  public String getSelectedCircuitName() {
+    return selectedCircuitName;
+  }
+
+  /**
+   * Ustawia nazwę wybranego gotowego obwodu
+   *
+   * @param selectedCircuitName nazwa wybranego gotowego obwodu
+   */
+  public void setSelectedCircuitNameName(String selectedCircuitName) {
+    this.selectedCircuitName = selectedCircuitName;
   }
 
   /**
@@ -109,6 +136,7 @@ public class Simulator extends Observable {
 
   /**
    * Dodaja danego obserwatora do listy obserwatorów.
+   *
    * @param o nowy obserwator
    */
   @Override
@@ -118,6 +146,7 @@ public class Simulator extends Observable {
 
   /**
    * Usuwa danego obserwatora z listy obserwatorów.
+   *
    * @param o obserwator, któreg trzeba usunąć
    */
   @Override

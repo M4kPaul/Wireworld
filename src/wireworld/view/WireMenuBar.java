@@ -38,18 +38,18 @@ class WireMenuBar extends JMenuBar {
     openItem = new JMenuItem("Open");
     saveItem = new JMenuItem("Save");
 
-    firstSizeItem = new JMenuItem("29x29", null);
-    secondSizeItem = new JMenuItem("37x37", null);
-    thirdSizeItem = new JMenuItem("49x49", null);
-    fourthSizeItem = new JMenuItem("Custom", null);
+    firstSizeItem = new JMenuItem("Small (32x32)", null);
+    secondSizeItem = new JMenuItem("Medium (64x64)", null);
+    thirdSizeItem = new JMenuItem("Big (128x128)", null);
+    // fourthSizeItem = new JMenuItem("Custom", null); TODO
 
     openItem.addActionListener(new OpenAction());
     saveItem.addActionListener(new SaveAction());
 
-    firstSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(29, 29));
-    secondSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(37, 37));
-    thirdSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(49, 49));
-    thirdSizeItem.addActionListener(null);
+    firstSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(32, 32));
+    secondSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(64, 64));
+    thirdSizeItem.addActionListener(e -> Simulator.getInstance().setGridSize(128, 128));
+    // fourthSizeItem.addActionListener(null);
 
     add(fileMenu);
     add(viewMenu);
@@ -72,6 +72,7 @@ class WireMenuBar extends JMenuBar {
 
     /**
      * Metoda wywoływana, gdy słuchacz odbierze zdarzenie.
+     *
      * @param e zdarzenie odebrane przez słuchacza
      */
     @Override
@@ -82,6 +83,7 @@ class WireMenuBar extends JMenuBar {
         public String getDescription() {
           return "Wireworld file (*.wwd)";
         }
+
         public boolean accept(File f) {
           return f.isDirectory() || f.getName().toLowerCase().endsWith(".wwd");
         }
@@ -108,6 +110,7 @@ class WireMenuBar extends JMenuBar {
 
     /**
      * Metoda wywoływana, gdy słuchacz odbierze zdarzenie zapisywania.
+     *
      * @param e zdarzenie odebrane przez słuchacza
      */
     @Override
@@ -118,6 +121,7 @@ class WireMenuBar extends JMenuBar {
         public String getDescription() {
           return "Wireworld file (*.wwd)";
         }
+
         public boolean accept(File f) {
           return f.isDirectory() || f.getName().toLowerCase().endsWith(".wwd");
         }

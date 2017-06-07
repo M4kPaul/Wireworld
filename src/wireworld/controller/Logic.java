@@ -11,6 +11,7 @@ public class Logic {
 
   /**
    * Tworzy następną generację komórek według ustalonej logiki.
+   *
    * @param grid siatka komórek
    */
   public void nextGeneration(Grid grid) {
@@ -29,6 +30,7 @@ public class Logic {
 
   /**
    * Wylicza danym komórkom siatki ich sąsiadów będących głowami elektronów.
+   *
    * @param grid siatka komórek
    */
   private void countAdjacentElectronHead(Grid grid) {

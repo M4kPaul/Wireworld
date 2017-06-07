@@ -1,8 +1,8 @@
 package wireworld.controller;
 
+import wireworld.circuits.Circuits;
 import wireworld.model.Cell;
 import wireworld.model.Simulator;
-import wireworld.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,19 +19,12 @@ public class CanvasMouseClickListener extends MouseAdapter {
   private int columnCount;
   private Point selectedCell;
   private Color selectedColor;
-  private String selectedStructureName;
+  private String selectedCircuitName;
   private HashMap<Point, Cell> selectedCells;
-  private HashMap<String, HashMap<Point, Cell>> prebuiltStructures;
-
-  /**
-   * Tworzy słuchacza obsługującego zdarzenia związane z naciśnięciem przycisku myszy.
-   */
-  public CanvasMouseClickListener() {
-    prebuiltStructures = new Structures().getPrebuilt();
-  }
 
   /**
    * Metoda wywoływana, gdy słuchacz odbierze zdarzenie naciśnięcia przycisku myszy.
+   *
    * @param e zdarzenie odebrane przez słuchacza
    */
   @Override
@@ -41,12 +34,12 @@ public class CanvasMouseClickListener extends MouseAdapter {
     columnCount = canvas.getColumnCount();
     selectedCell = canvas.getSelectedCell();
     selectedColor = canvas.getSelectedColor();
-    selectedStructureName = canvas.getStructureName();
+    selectedCircuitName = Simulator.getInstance().getSelectedCircuitName();
     selectedCells = canvas.getSelectedCells();
 
 
     Cell cell = new Cell(selectedCell, selectedColor);
-    if (selectedStructureName == null) {
+    if (selectedCircuitName == null) {
       if (SwingUtilities.isLeftMouseButton(e)) {
         if (selectedCells.containsKey(selectedCell)) {
           if (selectedColor.equals(selectedCells.get(selectedCell).getState())) {
@@ -63,17 +56,17 @@ public class CanvasMouseClickListener extends MouseAdapter {
         }
       }
     } else {
-      HashMap<Point, Cell> selectedStructure = prebuiltStructures.get(selectedStructureName);
-      for (Cell c : selectedStructure.values()) {
-        Point newPoint = new Point(selectedCell.x + c.getX(), selectedCell.y + c.getY());
+      HashMap<Point, Cell> selectedStructure = Circuits.getPrebuilt().get(selectedCircuitName);
+      selectedStructure.forEach((k, v) -> {
+        Point newPoint = new Point(selectedCell.x + v.getX(), selectedCell.y + v.getY());
         if (newPoint.x >= 0 && newPoint.y >= 0 && newPoint.x < columnCount && newPoint.y < rowCount) {
           if (selectedCells.containsKey(newPoint)) {
-            selectedCells.get(newPoint).setState(c.getState());
+            selectedCells.get(newPoint).setState(v.getState());
           } else {
-            selectedCells.put(newPoint, new Cell(newPoint, c.getState()));
+            selectedCells.put(newPoint, new Cell(newPoint, v.getState()));
           }
         }
-      }
+      });
     }
 
     canvas.setSelectedCells(selectedCells);

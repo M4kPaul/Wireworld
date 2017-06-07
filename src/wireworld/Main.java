@@ -8,9 +8,10 @@ import java.awt.*;
 /**
  * Klasa główna programu
  */
-public class Main {
+class Main {
   /**
    * Odpowiada za wykonanie instrukcji w wątku dystrybucji zdarzeń.
+   *
    * @param args tablica argumentów wywołania programu
    */
   public static void main(String[] args) {
@@ -19,7 +20,6 @@ public class Main {
 
       frame.setTitle("Wireworld");
       frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-      frame.setResizable(false);
       frame.setVisible(true);
     });
   }

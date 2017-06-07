@@ -1,5 +1,6 @@
 package wireworld.view;
 
+import wireworld.circuits.Circuits;
 import wireworld.model.Simulator;
 import wireworld.model.State;
 
@@ -11,7 +12,7 @@ import java.awt.event.MouseEvent;
 /**
  * Odowiada za wygląd i obsługę panelu do kontroli działania programu.
  */
-public class WireGui extends JPanel {
+class WireGui extends JPanel {
   private JPanel controlPanel;
   private JPanel drawPanel;
   private JPanel runPanel;
@@ -28,7 +29,6 @@ public class WireGui extends JPanel {
   private JSlider speedSlider;
   private JComboBox<String> prebuiltCircuitsList;
   private JLabel selectedCircuitLabel;
-  private JPanel emptyPanel;
 
   /**
    * Tworzy i inicjalizuje panel do kontorli działania programu.
@@ -46,11 +46,11 @@ public class WireGui extends JPanel {
     stopButton.addActionListener(e -> Simulator.getInstance().stop());
     speedSlider.addChangeListener(e -> Simulator.getInstance().setTimerDelay(1200 - speedSlider.getValue()));
 
-    selectedCircuitLabel.setIcon(new ImageIcon("src/wireworld/drawable/Diode.png"));
+    selectedCircuitLabel.setIcon(new ImageIcon("src/wireworld/drawable/" + prebuiltCircuitsList.getSelectedItem() + ".png"));
     prebuiltCircuitsList.addItemListener(e -> {
       selectedCircuitLabel.setIcon(new ImageIcon("src/wireworld/drawable/" + e.getItem() + ".png"));
       if (selectedCircuitLabel.getBorder() != null) {
-        Simulator.getInstance().getCanvas().setStructureName((String)prebuiltCircuitsList.getSelectedItem());
+        Simulator.getInstance().setSelectedCircuitNameName((String)prebuiltCircuitsList.getSelectedItem());
       }
     });
 
@@ -59,10 +59,10 @@ public class WireGui extends JPanel {
       public void mouseClicked(MouseEvent e) {
         if (selectedCircuitLabel.getBorder() == null) {
           selectedCircuitLabel.setBorder(BorderFactory.createLineBorder(Color.GREEN, 5));
-          Simulator.getInstance().getCanvas().setStructureName((String)prebuiltCircuitsList.getSelectedItem());
+          Simulator.getInstance().setSelectedCircuitNameName((String)prebuiltCircuitsList.getSelectedItem());
         } else {
           selectedCircuitLabel.setBorder(null);
-          Simulator.getInstance().getCanvas().setStructureName(null);
+          Simulator.getInstance().setSelectedCircuitNameName(null);
         }
       }
     });
@@ -75,7 +75,6 @@ public class WireGui extends JPanel {
    */
   private void createUIComponents() {
     prebuiltCircuitsList = new JComboBox<>();
-    prebuiltCircuitsList.addItem("Diode");
-    prebuiltCircuitsList.addItem("Xor");
+    Circuits.getPrebuilt().forEach((k, v) -> prebuiltCircuitsList.addItem(k));
   }
 }

@@ -1,7 +1,4 @@
-package wireworld.circuits;
-
-import wireworld.model.Cell;
-import wireworld.model.State;
+package wireworld.model;
 
 import java.awt.*;
 import java.io.FileInputStream;
@@ -46,7 +43,7 @@ public class Circuits implements State {
    */
   private static HashMap<Point, Cell> readSerializedCircuit(String fileName) {
     try {
-      FileInputStream fileIn = new FileInputStream("src/wireworld/circuits/data/" + fileName + ".ser");
+      FileInputStream fileIn = new FileInputStream("resources/data/" + fileName + ".ser");
       ObjectInputStream in = new ObjectInputStream(fileIn);
       HashMap<Point, Cell> circuit = (HashMap<Point, Cell>)in.readObject();
       in.close();

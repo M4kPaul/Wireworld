@@ -1,7 +1,7 @@
 package wireworld.controller;
 
-import wireworld.circuits.Circuits;
 import wireworld.model.Cell;
+import wireworld.model.Circuits;
 import wireworld.model.Simulator;
 
 import javax.swing.*;

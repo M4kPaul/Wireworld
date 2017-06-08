@@ -1,12 +1,8 @@
 package wireworld.view;
 
-import wireworld.circuits.Circuits;
 import wireworld.controller.CanvasMouseClickListener;
 import wireworld.controller.CanvasMouseMotionListener;
-import wireworld.model.Cell;
-import wireworld.model.Grid;
-import wireworld.model.Simulator;
-import wireworld.model.State;
+import wireworld.model.*;
 
 import javax.swing.*;
 import java.awt.*;
